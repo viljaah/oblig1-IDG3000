@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fixed - Lazy Loading Media</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        img { width: 100%; max-width: 600px; margin: 20px 0; display: block; }
+        video { width: 100%; max-width: 600px; margin: 20px 0; }
+        .spacer { 
+            height: 1000px; 
+            background: linear-gradient(to bottom, #f0f0f0, #e0e0e0); 
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fixed Version - With Lazy Loading</h1>
+    <p>This page only loads media when you scroll near it, saving bandwidth and improving performance.</p>
+    
+    <div class="spacer">
+        <h2>Scroll down to see more media...</h2>
+        <p>The images below will only load when you scroll close to them.</p>
+    </div>
+    
+    <!-- These media files use lazy loading - only load when scrolled into view -->
+    <img src="https://picsum.photos/800/400?random=1" alt="Large Image 1" loading="lazy">
+    <img src="https://picsum.photos/800/600?random=2" alt="Large Image 2" loading="lazy">
+    <img src="https://picsum.photos/800/500?random=3" alt="Large Image 3" loading="lazy">
+    <img src="https://picsum.photos/800/400?random=4" alt="Large Image 4" loading="lazy">
+    <img src="https://picsum.photos/800/600?random=5" alt="Large Image 5" loading="lazy">
+</body>
+</html>
