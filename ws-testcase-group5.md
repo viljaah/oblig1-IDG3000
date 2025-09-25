@@ -10,9 +10,10 @@ Date: 2025-09-25
 Only load images and videos when the user is about to see them (lazy loading), instead of loading all media files immediately when the page loads.
 
 ## 3) Why it matters
-- Performance: Reduces initial page load time and improves Core Web Vitals
-- CO₂ / Energy: Less data transferred initially means lower emissions per page view
-- UX / Accessibility: Faster initial loading, especially on slow connections or older devices
+- Performance: Lazy loading creates faster page loading by only downloading images when users actually scroll to see them, rather than loading everything at once. which improves LCP (largest contenful paint - one of the core web vitals). [source](https://www.cloudflare.com/ru-ru/learning/performance/what-is-lazy-loading/)
+- CO₂ / Energy:  Less data transfer means reduced energy consumption across the entire network path - from user devices and WiFi routers to servers and data centers, meaning decreasing the carbon footprint per page load. [source](https://medium.com/@FoxTechnology/how-lazy-loading-can-improve-application-startup-time-7e5cbca14921)
+- UX / Accessibility: Helps Application Load Faster + happy users → Faster loading improves user experience, especially for users on slow connections or limited data plans. [source](https://medium.com/@FoxTechnology/how-lazy-loading-can-improve-application-startup-time-7e5cbca14921)
+
 
 ## 4) Machine-testable? (partly)
 Automatable: Detect presence of `loading="lazy"` attributes, measure initial bytes transferred
