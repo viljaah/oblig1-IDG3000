@@ -1,9 +1,11 @@
 # STAR Test-case: [WSG 2.16] — Deferred Loading of Media
 
-Group: Vilja Henriksen, Modesta trakselyte
+Group: Vilja Henriksen, Modesta Trakselyte
 Date: 2025-09-25
 
 ## 1) WSG criterion (exact quote)
+- [2.16 Optimize media for sustainability](https://w3c.github.io/sustainableweb-wsg/#optimize-media-for-sustainability)
+- Success Criterion: Deferred loading
 > "Load data-intensive media on the client side, including the media itself, behind a facade - a non-functional and static representational element."
 
 ## 2) Plain-language summary
@@ -15,8 +17,13 @@ Only load images and videos when the user is about to see them (lazy loading), i
 - UX / Accessibility: Faster initial loading, especially on slow connections or older devices
 
 ## 4) Machine-testable? (partly)
-Automatable: Detect presence of `loading="lazy"` attributes, measure initial bytes transferred
-Manual required: Verify images actually defer loading until scrolled into view
+**Can be automated:**
+- Detection of images without `loading="lazy"` attribute using Lighthouse. [Source](https://web.dev/articles/browser-level-image-lazy-loading). [Source](https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Lazy_loading#images_and_iframes).
+- Performance metrics measurement (FCP, LCP, page weight) before and after implementing lazy loading.
+
+**Requires manual:**
+- Check if images actually defer loading until scrolled into view.
+- User experience impact: whether lazy loading causes layout shifts or delays.
 
 ## 5) Signals to check (explicit list)
 - `loading="lazy"` attribute present on below-the-fold images
