@@ -39,17 +39,22 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 
 ## 7) Exact test steps (reproducible)
 1. Serve broken version: `cd demo/broken && npx http-server . -p 8000`
-2. Run initial Lighthouse audit: `npx lighthouse 'http://localhost:8000/broken.html' --output=json --output-path=evidence/audit-broken-initial.json`
+2. Run initial Lighthouse audit: `npx lighthouse 'http://localhost:8000/broken.html' \
+--output=json \
+--output-path=./evidence/audit-fixed.json \
+--throttling-method=simulate \
+--emulated-form-factor=mobile \
+--save-assets \
+--chrome-flags="--headless"`
+
 3. Capture network requests during initial load: Document all media requests in broken version
 4. Serve fixed version: `cd demo/fixed && npx http-server . -p 8001` 
 5. Run Lighthouse on fixed (before interaction): `npx lighthouse 'http://localhost:8001/fixed.html' --output=json --output-path=evidence/audit-fixed-initial.json`
-6. Manually interact with facade elements in fixed version and capture network activity
-7. Compare initial transfer sizes and media requests between versions
-8. Document user interaction requirements in fixed version
+
 
 ## 8) Evidence required (list filenames)
-- `evidence/audit-broken-initial.json` - Lighthouse audit of broken version
-- `evidence/audit-fixed-initial.json` - Lighthouse audit of fixed version (before interaction)
+- `evidence/audit-broken.json` - Lighthouse audit of broken version
+- `evidence/audit-fixed.json` - Lighthouse audit of fixed version 
 - `evidence/network-broken.png` - Screenshot of network tab showing immediate media loading
 - `evidence/network-fixed-before.png` - Network tab of fixed version before interaction
 - `evidence/network-fixed-after.png` - Network tab after clicking facade elements
