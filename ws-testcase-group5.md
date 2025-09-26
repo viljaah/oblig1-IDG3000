@@ -51,6 +51,7 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 
 3. Serve fixed version: `cd demo/fixed && npx http-server . -p 8001` 
 4. Run Lighthouse on fixed (before interaction): `npx lighthouse 'http://localhost:8001/fixed.html' --output=json --output-path=evidence/audit-fixed-initial.json`
+5. run metrics commands listed in summary.md (to see results of LCP, total request)
 
 **Visual:**
 1. Open each HTML file on vscode go live extencion or by this command `cd demo/broken && npx http-server . -p 8000` and `cd demo/fixed && npx http-server . -p 8001` 
@@ -59,12 +60,17 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 
 
 ## 8) Evidence required (list filenames)
-- `evidence/audit-broken.json` - Lighthouse audit of broken version
-- `evidence/audit-fixed.json` - Lighthouse audit of fixed version 
-- `evidence/network-broken-before.png` - Screenshot of network tab showing immediate media loading (before ineraction)
-- `evidence/network-broken-after.png` - Screenshot of network tab showing broken version after interaction
-- `evidence/network-fixed-before.png` - Screenshot of network tab showing fixed version before interaction
-- `evidence/network-fixed-after.png` - Screenshot of network tab showing fixed version after interaction
+- evidence/audit-broken.json (main audit results)
+- evidence/audit-fixed.json (main audit results)
+- evidence/audit-broken.devtoolslog.json (detailed network log)
+- evidence/audit-fixed.devtoolslog.json (detailed network log)
+- evidence/audit-broken.trace.json (performance trace)
+- evidence/audit-fixed.trace.json (performance trace)
+- evidence/network-broken-before.png (screenshot)
+- evidence/network-broken-after.png (screenshot)
+- evidence/network-fixed-before.png (screenshot)
+- evidence/network-fixed-after.png (screenshot)
+- evidence/summary.md (analysis)
 
 
 ## 10) Assumptions & notes
