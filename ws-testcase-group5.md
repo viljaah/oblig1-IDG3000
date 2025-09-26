@@ -12,46 +12,54 @@ Date: 2025-09-25
 Don’t force the browser to download a giant video right away. Instead, load a small static image or “fake” play button, or "blury" element, and only load the actual video or other media content if the user clicks it, or interacts with it. "exmaples, youtube, instagram, booking.com"
 
 ## 3) Why it matters
-- Performance: Lazy loading creates faster page loading by only downloading images when users actually scroll to see them, rather than loading everything at once. which improves LCP (largest contenful paint - one of the core web vitals). [source](https://www.cloudflare.com/ru-ru/learning/performance/what-is-lazy-loading/)
-- CO₂ / Energy:  Less data transfer means reduced energy consumption across the entire network path - from user devices and WiFi routers to servers and data centers, meaning decreasing the carbon footprint per page load. [source](https://medium.com/@FoxTechnology/how-lazy-loading-can-improve-application-startup-time-7e5cbca14921)
-- UX / Accessibility: Helps Application Load Faster + happy users → Faster loading improves user experience, especially for users on slow connections or limited data plans. [source](https://medium.com/@FoxTechnology/how-lazy-loading-can-improve-application-startup-time-7e5cbca14921)
+- Performance: Deferred loading prevents heavy media from blocking initial page render and reduces Time to Interactive (TTI). Only essential content loads initially, improving Core Web Vitals.
+- CO₂ / Energy: Significantly reduces data transfer by loading media only when users explicitly request it. Many users never interact with all media on a page, so this saves substantial bandwidth and energy.
+- UX / Accessibility: A quick-loading page creates a more positive first impression and enhances overall user satisfaction. Users are less likely to leave a slow-loading site, which leads to higher engagement and retention and imrpoved user experience. 
 
 
 ## 4) Machine-testable? (partly)
 **Can be automated:**
 - Detection of images without `loading="lazy"` attribute using Lighthouse. [Source](https://web.dev/articles/browser-level-image-lazy-loading). [Source](https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Lazy_loading#images_and_iframes).
-- Performance metrics measurement (FCP, LCP, page weight) before and after implementing lazy loading.
+- Performance metrics measurement (FCP, LCP, page weight) before and after implementing deferred loading.
 
 **Requires manual:**
 - Check if images actually defer loading until scrolled into view.
-- User experience impact: whether lazy loading causes layout shifts or delays.
+- User experience impact: whether deferred loading causes layout shifts/facade with help from elements or delays.
 
 ## 5) Signals to check (explicit list)
-- `loading="lazy"` attribute present on below-the-fold images
-- Initial `transferSize` for images that are not immediately visible
-- Number of network requests on initial page load vs after scrolling
-- Largest Contentful Paint (LCP) timing
+- Media elements (video, audio, large images) load behind facade elements on initial page load
+- Initial `transferSize` includes only facade assets, not full media files
+- Media files only requested after user interaction (click/tap)
+- Facade elements provide visual indication they're interactive (cursor: pointer, play buttons)
+- Network requests show clear difference: initial load vs post-interaction load
 
 ## 6) Pass / Fail rules (explicit)
-- PASS if: Below-the-fold images have `loading="lazy"` AND initial transferSize is <50% of total page images
-- FAIL if: All images load immediately regardless of viewport position
+- **PASS if**: Heavy media (>500KB) loads behind facade elements AND media files are not requested until user interaction AND facades provide clear interaction cues
+- **FAIL if**: Heavy media loads immediately on page load without user interaction
 
 ## 7) Exact test steps (reproducible)
 1. Serve broken version: `cd demo/broken && npx http-server . -p 8000`
-2. Run Lighthouse: `npx lighthouse 'http://localhost:8000' --output=json --output-path=evidence/audit-broken.json`
-3. Extract network data: `node tools/extract-requests.js evidence/audit-broken.json > evidence/requests-broken.csv`
-4. Repeat for fixed version on port 8001
-5. Compare initial bytes transferred and number of requests
+2. Run initial Lighthouse audit: `npx lighthouse 'http://localhost:8000/broken.html' --output=json --output-path=evidence/audit-broken-initial.json`
+3. Capture network requests during initial load: Document all media requests in broken version
+4. Serve fixed version: `cd demo/fixed && npx http-server . -p 8001` 
+5. Run Lighthouse on fixed (before interaction): `npx lighthouse 'http://localhost:8001/fixed.html' --output=json --output-path=evidence/audit-fixed-initial.json`
+6. Manually interact with facade elements in fixed version and capture network activity
+7. Compare initial transfer sizes and media requests between versions
+8. Document user interaction requirements in fixed version
 
 ## 8) Evidence required (list filenames)
-- `evidence/audit-broken.json`, `evidence/audit-fixed.json`
-- `evidence/requests-broken.csv`, `evidence/requests-fixed.csv` 
-- `evidence/before.png`, `evidence/after.png`
-- `evidence/summary.md`
+- `evidence/audit-broken-initial.json` - Lighthouse audit of broken version
+- `evidence/audit-fixed-initial.json` - Lighthouse audit of fixed version (before interaction)
+- `evidence/network-broken.png` - Screenshot of network tab showing immediate media loading
+- `evidence/network-fixed-before.png` - Network tab of fixed version before interaction
+- `evidence/network-fixed-after.png` - Network tab after clicking facade elements
+
 
 ## 9) Automation hints (optional)
-Use script to count images with/without `loading="lazy"` and calculate bytes saved
+- Detection of interactive elements (buttons, clickable areas) that trigger media loading
 
 ## 10) Assumptions & notes
 CO₂ model: Using transferSize as basis for emissions calculation
 Testing on mobile viewport (375px width)
+
+
