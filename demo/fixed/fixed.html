@@ -66,7 +66,7 @@
 <body>
     <div class="hero">
         <h1>Fixed example with Lazy/Deferred Loading</h1>
-        <p>Media loads only when needed, saving bandwidth and improving performance</p>
+        <p>Media loads only when needed, saving data and improving performance</p>
     </div>
 
     <div class="success">
@@ -93,7 +93,7 @@
             <div class="media-item">
                 <h3>Large Photo 2</h3>
                 <img src="https://picsum.photos/800/600?random=2" alt="Random nature photo" width="800" height="600" loading="lazy">
-                <p>✅ Saves bandwidth until user actually needs to see it</p>
+                <p>✅ Saves data until user actually needs to see it</p>
             </div>
             <div class="media-item">
                 <h3>Large Photo 3</h3>
@@ -118,7 +118,7 @@
                 <video width="640" height="360" controls preload="none" poster="../media/video2-poster.jpeg">
                     <source src="../media/video2.mp4" type="video/mp4">
                 </video>
-                <p>✅ Deferred video loading saves bandwidth</p>
+                <p>✅ Deferred video loading saves data</p>
             </div>
         </div>
     </div>
@@ -138,7 +138,7 @@
                 <audio controls preload="none">
                     <source src="../media/wake-me-up-before-you-gogo.wav" type="audio/wav">
                 </audio>
-                <p>✅ Deferred audio loading saves bandwidth</p>
+                <p>✅ Deferred audio loading saves data</p>
             </div>
         </div>
     </div>
@@ -156,7 +156,6 @@
 
     <footer>
         <p>End of page. Media loaded efficiently using lazy/deferred loading</p>
-        <p><strong>Bandwidth saved:</strong> ~8-12MB not loaded until actually needed</p>
         <p><strong>Techniques used:</strong> loading="lazy", preload="none", Intersection Observer</p>
     </footer>
 
@@ -186,18 +185,18 @@
         observer.observe(advancedContent);
 
         // loading placeholder for lazy images
-        document.addEventListener('DOMContentLoaded', function() {
-            const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const lazyImages = document.querySelectorAll('img[loading="lazy"]');
             
-            lazyImages.forEach(img => {
-                img.addEventListener('load', function() {
-                    this.style.opacity = '1';
-                });
+        //     lazyImages.forEach(img => {
+        //         img.addEventListener('load', function() {
+        //             this.style.opacity = '1';
+        //         });
                 
-                img.style.opacity = '0.7';
-                img.style.transition = 'opacity 0.3s ease';
-            });
-        });
+        //         img.style.opacity = '0.7';
+        //         img.style.transition = 'opacity 0.3s ease';
+        //     });
+        // });
     </script>
 </body>
 </html>
