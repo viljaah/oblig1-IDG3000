@@ -47,21 +47,23 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 --save-assets \
 --chrome-flags="--headless"`
 
-3. Capture network requests during initial load: Document all media requests in broken version
-4. Serve fixed version: `cd demo/fixed && npx http-server . -p 8001` 
-5. Run Lighthouse on fixed (before interaction): `npx lighthouse 'http://localhost:8001/fixed.html' --output=json --output-path=evidence/audit-fixed-initial.json`
+3. Serve fixed version: `cd demo/fixed && npx http-server . -p 8001` 
+4. Run Lighthouse on fixed (before interaction): `npx lighthouse 'http://localhost:8001/fixed.html' --output=json --output-path=evidence/audit-fixed-initial.json`
 
 
 ## 8) Evidence required (list filenames)
-- `evidence/audit-broken.json` - Lighthouse audit of broken version
-- `evidence/audit-fixed.json` - Lighthouse audit of fixed version 
-- `evidence/network-broken.png` - Screenshot of network tab showing immediate media loading
-- `evidence/network-fixed-before.png` - Network tab of fixed version before interaction
-- `evidence/network-fixed-after.png` - Network tab after clicking facade elements
-
+- evidence/audit-broken.json (main audit results)
+- evidence/audit-fixed.json (main audit results)
+- evidence/audit-broken.devtoolslog.json (detailed network log)
+- evidence/audit-fixed.devtoolslog.json (detailed network log)
+- evidence/audit-broken.trace.json (performance trace)
+- evidence/audit-fixed.trace.json (performance trace)
+- evidence/network-broken.png (screenshot)
+- evidence/network-fixed.png (screenshot)
+- evidence/summary.md (analysis)
 
 ## 9) Automation hints (optional)
-- Detection of interactive elements (buttons, clickable areas) that trigger media loading
+- Detection of interactive elements (play buttons, clickable areas) that trigger media loading
 
 ## 10) Assumptions & notes
 CO₂ model: Using transferSize as basis for emissions calculation
