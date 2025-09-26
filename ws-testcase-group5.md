@@ -34,7 +34,7 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 - Network requests show clear difference: initial load vs post-interaction load
 
 ## 6) Pass / Fail rules (explicit)
-- **PASS if**: Heavy media (>500KB) loads behind facade elements AND media files are not requested until user interaction AND facades provide clear interaction cues
+- **PASS if**: Heavy media (>500KB) loads behind facade elements AND media files are not requested until user interaction
 - **FAIL if**: Heavy media loads immediately on page load without user interaction
 
 ## 7) Exact test steps (reproducible)
@@ -49,7 +49,7 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 
 3. Serve fixed version: `cd demo/fixed && npx http-server . -p 8001` 
 4. Run Lighthouse on fixed (before interaction): `npx lighthouse 'http://localhost:8001/fixed.html' --output=json --output-path=evidence/audit-fixed-initial.json`
-5. run metrixs commands listed in summary.md (to see results of LCP, total request)
+5. run metrics commands listed in summary.md (to see results of LCP, total request)
 
 
 ## 8) Evidence required (list filenames)
