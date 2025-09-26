@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed - With Lazy/Deferred Loading</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .hero {
+            background: #4CAF50;
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .content-section {
+            margin: 60px 0;
+            padding: 20px;
+        }
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .media-item {
+            border: 2px solid #ddd;
+            padding: 15px;
+        }
+        img, video {
+            max-width: 100%;
+            height: auto;
+        }
+        .success {
+            background: #e8f5e8;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            color: #2e7d32;
+        }
+        footer {
+            margin-top: 60px;
+            padding: 40px 20px;
+            background: #4CAF50;
+            color: white;
+            text-align: center;
+        }
+        /* placeholder before lazy images appear */
+        img[loading="lazy"] {
+            background: #483f3f;
+            min-height: 200px;
+        }
+        .loading-placeholder {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Fixed example with Lazy/Deferred Loading</h1>
+        <p>Media loads only when needed, saving data and improving performance</p>
+    </div>
+
+    <div class="success">
+        <strong>Solution:</strong> Using loading="lazy" for images, preload="none" for videos, and deferred loading techniques to load media only when users scroll to it.
+    </div>
+
+    <div class="content-section">
+        <h2>Visable Content</h2>
+        <!-- critical/visable image loads immediately -->
+        <img src="https://picsum.photos/400/200?random=hero" alt="Hero image" width="400" height="200">
+        <p><em>This hero image loads right away because it's visable from the start</em></p>
+        <p>This is the content users see immediately. The image above should load right away, but everything below should be deferred.</p>
+    </div>
+
+    <!-- all media below uses lazy loading -->
+    <div class="content-section">
+        <h2>Off-screen Images (Lazy Loading. GOOD!)</h2>
+        <div class="media-grid">
+            <div class="media-item">
+                <h3>Large Photo 1</h3>
+                <img src="https://picsum.photos/800/600?random=1" alt="Random landscape photo" width="800" height="600" loading="lazy">
+                <p>✅ This image uses loading="lazy". Loads only when scrolled into view</p>
+            </div>
+            <div class="media-item">
+                <h3>Large Photo 2</h3>
+                <img src="https://picsum.photos/800/600?random=2" alt="Random nature photo" width="800" height="600" loading="lazy">
+                <p>✅ Saves data until user actually needs to see it</p>
+            </div>
+            <div class="media-item">
+                <h3>Large Photo 3</h3>
+                <img src="https://picsum.photos/800/600?random=3" alt="Random architecture photo" width="800" height="600" loading="lazy">
+                <p>✅ Deferred loading improves page performance</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2>Off-screen Videos (Deferred Loading. GOOD!)</h2>
+        <div class="media-grid">
+            <div class="media-item">
+                <h3>Sample Video 1</h3>
+                <video width="640" height="360" controls preload="none" poster="../media/video1-poster.jpeg">
+                    <source src="../media/video1.mp4" type="video/mp4">
+                </video>
+                <p>✅ Video with preload="none" loads only when user interacts</p>
+            </div>
+            <div class="media-item">
+                <h3>Sample Video 2</h3>
+                <video width="640" height="360" controls preload="none" poster="../media/video2-poster.jpeg">
+                    <source src="../media/video2.mp4" type="video/mp4">
+                </video>
+                <p>✅ Deferred video loading saves data</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <h2>Off-screen Audio (Deferred Loading. GOOD!)</h2>
+        <div class="media-grid">
+            <div class="media-item">
+                <h3>Sample Audio 1</h3>
+                <audio controls preload="none">
+                    <source src="../media/final-countdown.wav" type="audio/wav">
+                </audio>
+                <p>✅ Audio with preload="none" loads only when user interacts</p>
+            </div>
+            <div class="media-item">
+                <h3>Sample Audio 2</h3>
+                <audio controls preload="none">
+                    <source src="../media/wake-me-up-before-you-gogo.wav" type="audio/wav">
+                </audio>
+                <p>✅ Deferred audio loading saves data</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- js intersection observer -->
+    <div class="content-section">
+        <h2>Deferred Loading</h2>
+        <div class="media-item">
+            <h3>Intersection Observer</h3>
+            <div id="advanced-content" class="loading-placeholder">
+                Content will load when scrolled into view...
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>End of page. Media loaded efficiently using lazy/deferred loading</p>
+        <p><strong>Techniques used:</strong> loading="lazy", preload="none", Intersection Observer</p>
+    </footer>
+
+    <script>
+        // lazy loading using intersection observer
+        const advancedContent = document.getElementById('advanced-content');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.innerHTML = `
+                            <h4>Content Loaded!</h4>
+                            <img src="https://picsum.photos/400/300?random=advanced" alt="Lazy loaded content" loading="lazy">
+                            <p>This content was loaded using Intersection Observer when it came into view.</p>
+                        `;
+                        entry.target.classList.remove('loading-placeholder');
+                    }, 1000);
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        observer.observe(advancedContent);
+
+        // loading placeholder for lazy images
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+            
+        //     lazyImages.forEach(img => {
+        //         img.addEventListener('load', function() {
+        //             this.style.opacity = '1';
+        //         });
+                
+        //         img.style.opacity = '0.7';
+        //         img.style.transition = 'opacity 0.3s ease';
+        //     });
+        // });
+    </script>
+</body>
+</html>
