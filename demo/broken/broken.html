@@ -52,11 +52,11 @@
 <body>
     <div class="hero">
         <h1>Broken example no Deferred Loading</h1>
-        <p>All media loads immediately, wasting bandwidth and slowing page load</p>
+        <p>All media loads immediately, wasting data and slowing page load</p>
     </div>
 
     <div class="warning">
-        <strong>Problem:</strong> All images, videos, and audio files below load immediately when the page loads, even though most users won't scroll down to see them. This wastes bandwidth and increases page load time.
+        <strong>Problem:</strong> All images, videos, and audio files below load immediately when the page loads, even though most users won't scroll down to see them. This wastes data and increases page load time.
     </div>
 
     <div class="content-section">
@@ -82,7 +82,7 @@
             <div class="media-item">
                 <h3>Large Photo 3</h3>
                 <img src="https://picsum.photos/800/600?random=3" alt="Random architecture photo" width="800" height="600">
-                <p>Another bandwidth-wasting immediate load</p>
+                <p>Another data-wasting immediate load</p>
             </div>
         </div>
     </div>
@@ -102,7 +102,7 @@
                 <video width="640" height="360" controls preload="metadata">
                     <source src="../media/video2.mp4" type="video/mp4">
                 </video>
-                <p>preload="metadata" also wastes some bandwidth</p>
+                <p>preload="metadata" also wastes some data</p>
             </div>
         </div>
     </div>
@@ -122,14 +122,13 @@
                 <audio controls preload="metadata">
                     <source src="../media/wake-me-up-before-you-gogo.wav" type="audio/wav">
                 </audio>
-                <p>Another audio file wasting bandwidth</p>
+                <p>Another audio file wasting data</p>
             </div>
         </div>
     </div>
 
     <footer>
         <p>End of page. All media above loaded immediately, wasting resources</p>
-        <p><strong>Total bandwidth wasted:</strong> ~10-15MB loaded unnecessarily</p>
     </footer>
 </body>
 </html>
