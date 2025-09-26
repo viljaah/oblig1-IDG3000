@@ -49,6 +49,7 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 
 3. Serve fixed version: `cd demo/fixed && npx http-server . -p 8001` 
 4. Run Lighthouse on fixed (before interaction): `npx lighthouse 'http://localhost:8001/fixed.html' --output=json --output-path=evidence/audit-fixed-initial.json`
+5. run metrixs commands listed in summary.md (to see results of LCP, total request)
 
 
 ## 8) Evidence required (list filenames)
