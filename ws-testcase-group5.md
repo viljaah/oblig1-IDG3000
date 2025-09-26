@@ -1,6 +1,7 @@
 # STAR Test-case: [WSG 2.16] — Deferred Loading of Media
 
 Group: Vilja Henriksen, Modesta Trakselyte
+
 Date: 2025-09-25
 
 ## 1) WSG criterion (exact quote)
@@ -13,8 +14,8 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 
 ## 3) Why it matters
 - Performance: Deferred loading prevents heavy media from blocking initial page render and reduces Time to Interactive (TTI). Only essential content loads initially, improving Core Web Vitals.
-- CO₂ / Energy: Significantly reduces data transfer by loading media only when users explicitly request it. Many users never interact with all media on a page, so this saves substantial bandwidth and energy.
-- UX / Accessibility: A quick-loading page creates a more positive first impression and enhances overall user satisfaction. Users are less likely to leave a slow-loading site, which leads to higher engagement and retention and imrpoved user experience. 
+- CO₂ / Energy: Significantly reduces data transfer by loading media only when users explicitly request it. Many users never interact with all media on a page, so this saves substantial data and energy.
+- UX / Accessibility: A quick-loading page creates a more positive first impression and enhances overall user satisfaction. Users are less likely to leave a fast-loading site, which leads to higher engagement and imrpoved user experience.
 
 
 ## 4) Machine-testable? (partly)
@@ -27,17 +28,18 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 - User experience impact: whether deferred loading causes layout shifts/facade with help from elements or delays.
 
 ## 5) Signals to check (explicit list)
-- Media elements (video, audio, large images) load behind facade elements on initial page load
-- Initial `transferSize` includes only facade assets, not full media files
+- Media elements (video, audio, images) load behind facade elements on initial page load
 - Media files only requested after user interaction (click/tap)
 - Facade elements provide visual indication they're interactive (cursor: pointer, play buttons)
 - Network requests show clear difference: initial load vs post-interaction load
+- Initial `transferSize` includes only facade assets, not full media files
 
 ## 6) Pass / Fail rules (explicit)
-- **PASS if**: Heavy media (>500KB) loads behind facade elements AND media files are not requested until user interaction
+- **PASS if**: Heavy media loads behind facade elements AND media files are not requested until user interaction
 - **FAIL if**: Heavy media loads immediately on page load without user interaction
 
 ## 7) Exact test steps (reproducible)
+**Structured:**
 1. Serve broken version: `cd demo/broken && npx http-server . -p 8000`
 2. Run initial Lighthouse audit: `npx lighthouse 'http://localhost:8000/broken.html' \
 --output=json \
@@ -51,6 +53,11 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 4. Run Lighthouse on fixed (before interaction): `npx lighthouse 'http://localhost:8001/fixed.html' --output=json --output-path=evidence/audit-fixed-initial.json`
 5. run metrics commands listed in summary.md (to see results of LCP, total request)
 
+**Visual:**
+1. Open each HTML file on vscode go live extencion or by this command `cd demo/broken && npx http-server . -p 8000` and `cd demo/fixed && npx http-server . -p 8001` 
+2. Open DevTools, Network tab
+3. Refresh the page
+
 
 ## 8) Evidence required (list filenames)
 - evidence/audit-broken.json (main audit results)
@@ -59,15 +66,13 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 - evidence/audit-fixed.devtoolslog.json (detailed network log)
 - evidence/audit-broken.trace.json (performance trace)
 - evidence/audit-fixed.trace.json (performance trace)
-- evidence/network-broken.png (screenshot)
-- evidence/network-fixed.png (screenshot)
+- evidence/network-broken-before.png (screenshot)
+- evidence/network-broken-after.png (screenshot)
+- evidence/network-fixed-before.png (screenshot)
+- evidence/network-fixed-after.png (screenshot)
 - evidence/summary.md (analysis)
 
-## 9) Automation hints (optional)
-- Detection of interactive elements (play buttons, clickable areas) that trigger media loading
 
 ## 10) Assumptions & notes
-CO₂ model: Using transferSize as basis for emissions calculation
-Testing on mobile viewport (375px width)
-
-
+- Measurement Definitions: Initial load includes all resources downloaded automatically when page opens. Deferred loading triggered only when user clicks/scrolls to interact with media elements
+- Test Environment: using `transferSize` (compressed bytes) as source of truth for data measurements
