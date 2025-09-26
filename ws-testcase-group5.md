@@ -9,7 +9,7 @@ Date: 2025-09-25
 > "Load data-intensive media on the client side, including the media itself, behind a facade - a non-functional and static representational element."
 
 ## 2) Plain-language summary
-Only load images and videos when the user is about to see them (lazy loading), instead of loading all media files immediately when the page loads.
+Don’t force the browser to download a giant video right away. Instead, load a small static image or “fake” play button, or "blury" element, and only load the actual video or other media content if the user clicks it, or interacts with it. "exmaples, youtube, instagram, booking.com"
 
 ## 3) Why it matters
 - Performance: Lazy loading creates faster page loading by only downloading images when users actually scroll to see them, rather than loading everything at once. which improves LCP (largest contenful paint - one of the core web vitals). [source](https://www.cloudflare.com/ru-ru/learning/performance/what-is-lazy-loading/)

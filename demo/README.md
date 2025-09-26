@@ -8,3 +8,5 @@ what to observe for broken page:
 Network activity: Open browser DevTools (F12) → Network tab → reload the page
 - You should see ALL images start downloading immediately
 - Even images you can't see yet are being loaded
+
+
