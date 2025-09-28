@@ -84,12 +84,11 @@ npx lighthouse 'http://localhost:8000/demo/broken/broken.html' \
 
 
 ## 10) Assumptions & notes
-- **Updated evidence**: Tests run from project root to ensure media files (videos/audio) are accessible and measured
-- **Viewport**: Lighthouse uses 412px x 823px mobile viewport (confirmed via configSettings.screenEmulation)
-- **Dramatic impact**: With media files properly loading, deferred loading saves 3.58MB (96% reduction)
+- **Collect evidance**: Tests run from project root to ensure media files (videos/audio) are accessible and measured
+- **Viewport**: Lighthouse uses 412px x 823px mobile viewport (confirmed via script which can be found in summary.md)
+- **Impact**: With media files properly loading, deferred loading saves 3.58MB (96% reduction)
 - **Media file behavior**: Broken version loads 1.77MB video + 1.63MB audio immediately; Fixed version defers all heavy media with preload="none"
 - **Transfer size variance**: CLI measurements are primary evidence due to controlled conditions; DevTools screenshots demonstrate loading behavior patterns
-- **Evidence hierarchy**: Lighthouse audit data provides quantitative metrics; DevTools screenshots show qualitative user experience differences
 - **Tools**: Lighthouse CLI [12.8.2], Node.js [v22.13.0], Chrome
 - **Initial load definition**: All resources downloaded automatically when page opens, before any user interactions
 - **Deferred loading definition**: Media content loads only when user explicitly clicks/interacts with facade elements
