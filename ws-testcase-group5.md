@@ -40,18 +40,28 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 
 ## 7) Exact test steps (reproducible)
 **Structured:**
-1. Serve broken version: `cd demo/broken && npx http-server . -p 8000`
-2. Run initial Lighthouse audit: `npx lighthouse 'http://localhost:8000/broken.html' \
+1. Serve from project root: `cd oblig1-IDG3000 && npx http-server . -p 8000`
+2. Run Lighthouse audit on broken version: 
+```bash
+npx lighthouse 'http://localhost:8000/demo/broken/broken.html' \
 --output=json \
---output-path=./evidence/audit-fixed.json \
+--output-path=./evidence/audit-broken-with-videos.json \
 --throttling-method=simulate \
 --emulated-form-factor=mobile \
 --save-assets \
---chrome-flags="--headless"`
+--chrome-flags="--headless"
+```
 
-3. Serve fixed version: `cd demo/fixed && npx http-server . -p 8001` 
-4. Run Lighthouse on fixed (before interaction): `npx lighthouse 'http://localhost:8001/fixed.html' --output=json --output-path=evidence/audit-fixed-initial.json`
-5. run metrics commands listed in summary.md (to see results of LCP, total request)
+3. Serve fixed version: `cd oblig1-IDG3000 && npx http-server . -p 8001` 
+4. Run Lighthouse on fixed (before interaction): 
+`npx lighthouse 'http://localhost:8000/demo/fixed/fixed.html' \
+--output=json \
+--output-path=./evidence/audit-fixed-with-videos.json \
+--throttling-method=simulate \
+--emulated-form-factor=mobile \
+--save-assets \
+--chrome-flags="--headless"``
+5. run metrics commands listed in summary.md (to see results of LCP, total request, transferSize, and lighthouse viewport settings)
 
 **Visual:**
 1. Open each HTML file on vscode go live extencion or by this command `cd demo/broken && npx http-server . -p 8000` and `cd demo/fixed && npx http-server . -p 8001` 
@@ -60,8 +70,8 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 
 
 ## 8) Evidence required (list filenames)
-- evidence/audit-broken.json (main audit results)
-- evidence/audit-fixed.json (main audit results)
+- evidence/audit-broken-with-vidoes.json (main audit results)
+- evidence/audit-fixed-with-vidoes.json (main audit results)
 - evidence/audit-broken.devtoolslog.json (detailed network log)
 - evidence/audit-fixed.devtoolslog.json (detailed network log)
 - evidence/audit-broken.trace.json (performance trace)
@@ -74,10 +84,13 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 
 
 ## 10) Assumptions & notes
-- Tool versions: Lighthouse CLI [12.8.2], Node.js [v22.13.0], Chrome
-- Measurement method: transferSize (compressed bytes) used as source of truth for data transfer calculations
-- Test environment: Local development servers (http-server) on ports 8000 and 8001
-- Initial load definition: All resources downloaded automatically when page opens, before any user interactions
-- Deferred loading definition: Media content loads only when user explicitly clicks/interacts with facade elements
-- Testing scope: Single page comparison between broken and fixed implementations
-- Network conditions: Default Lighthouse audit settings (not specifically tested on slow networks). In command line we used this [--throttling-method=simulate] which Lighthouse automatically applies simulated slow network conditions. 
+- **Updated evidence**: Tests run from project root to ensure media files (videos/audio) are accessible and measured
+- **Viewport**: Lighthouse uses 412px x 823px mobile viewport (confirmed via configSettings.screenEmulation)
+- **Dramatic impact**: With media files properly loading, deferred loading saves 3.58MB (96% reduction)
+- **Media file behavior**: Broken version loads 1.77MB video + 1.63MB audio immediately; Fixed version defers all heavy media with preload="none"
+- **Transfer size variance**: CLI measurements are primary evidence due to controlled conditions; DevTools screenshots demonstrate loading behavior patterns
+- **Evidence hierarchy**: Lighthouse audit data provides quantitative metrics; DevTools screenshots show qualitative user experience differences
+- **Tools**: Lighthouse CLI [12.8.2], Node.js [v22.13.0], Chrome
+- **Initial load definition**: All resources downloaded automatically when page opens, before any user interactions
+- **Deferred loading definition**: Media content loads only when user explicitly clicks/interacts with facade elements
+- **Network conditions**: Default Lighthouse audit settings (not specifically tested on slow networks). In command line we used this [--throttling-method=simulate] which Lighthouse automatically applies simulated slow network conditions. 
