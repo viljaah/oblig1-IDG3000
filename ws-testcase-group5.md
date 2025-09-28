@@ -74,5 +74,10 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 
 
 ## 10) Assumptions & notes
-- Measurement Definitions: Initial load includes all resources downloaded automatically when page opens. Deferred loading triggered only when user clicks/scrolls to interact with media elements
-- Test Environment: using `transferSize` (compressed bytes) as source of truth for data measurements
+- Tool versions: Lighthouse CLI [12.8.2], Node.js [v22.13.0], Chrome
+- Measurement method: transferSize (compressed bytes) used as source of truth for data transfer calculations
+- Test environment: Local development servers (http-server) on ports 8000 and 8001
+- Initial load definition: All resources downloaded automatically when page opens, before any user interactions
+- Deferred loading definition: Media content loads only when user explicitly clicks/interacts with facade elements
+- Testing scope: Single page comparison between broken and fixed implementations
+- Network conditions: Default Lighthouse audit settings (not specifically tested on slow networks). In command line we used this [--throttling-method=simulate] which Lighthouse automatically applies simulated slow network conditions. 
