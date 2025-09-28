@@ -44,6 +44,7 @@ Throttling method: simulate
 - Total transfer: 141,960 bytes = 142KB
 - Videos/audio deferred with preload="none"
 
+
 | Version | Transfer Size | Requests |
 |---------|---------------|----------|
 | Broken  | 3.7 MB       | 23       |
