@@ -32,7 +32,7 @@ Don’t force the browser to download a giant video right away. Instead, load a 
 - Media files only requested after user interaction (click/tap)
 - Facade elements provide visual indication they're interactive (cursor: pointer, play buttons)
 - Network requests show clear difference: initial load vs post-interaction load
-- Initial `transferSize` includes only facade assets, not full media files
+- transferSize (kB, mB, etc) is smaller for pages that use facades (like thumbnails or previews), since only the facade data is counted. For media without a facade, the full file size is included in transferSize
 
 ## 6) Pass / Fail rules (explicit)
 - **PASS if**: Heavy media loads behind facade elements AND media files are not requested until user interaction
